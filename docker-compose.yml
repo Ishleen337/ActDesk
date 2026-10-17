@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: actdesk-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://actdesk:actdesk_secure_pw@postgres:5432/actdesk_db
+      - REDIS_URL=redis://redis:6379/0
+      - USE_IN_MEMORY_CACHE=false
+      - SECRET_KEY=actdesk-production-super-secret-key-2026
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: actdesk-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: actdesk
+      POSTGRES_PASSWORD: actdesk_secure_pw
+      POSTGRES_DB: actdesk_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: actdesk-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
