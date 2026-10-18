@@ -16,7 +16,7 @@ import About from './pages/About';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Contact from './pages/Contact';
-import { useAuth } from './context/AuthContext'; // Added to protect routes
+import { useAuth } from './context/AuthContext'; 
 
 import { LayoutDashboard, Sliders, Clock, FileText, Package, ShieldAlert } from 'lucide-react';
 
@@ -32,7 +32,7 @@ const DASHBOARD_TABS = [
 function MainApp() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth(); // Get user state
+  const { user } = useAuth(); 
   const searchParams = new URLSearchParams(location.search);
   
   const viewParam = searchParams.get('view');
@@ -66,7 +66,8 @@ function MainApp() {
     <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 transition-colors duration-300">
       <Navbar currentView={currentView} setCurrentView={handleViewChange} />
 
-      <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 xl:px-12 py-6">
+      {/* CORRECTED MAIN WRAPPER: Added max-w-7xl, mx-auto, and overflow-hidden */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-hidden">
         {currentView === 'storefront' ? (
           <CustomerStorefront onNavigateToDashboard={() => handleViewChange('dashboard')} />
         ) : (
@@ -79,7 +80,7 @@ function MainApp() {
                   <button
                     key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
+                    className={`flex items-center gap-2 px-3 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
                       isActive
                         ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
                         : 'text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -95,7 +96,6 @@ function MainApp() {
               {activeTab === 'overview' && <OverviewTab onSwitchTab={handleTabChange} />}
               {activeTab === 'dial' && <AutonomyDialTab />}
               
-              {/* Protect Approvals & Audit so they don't spam 401 errors */}
               {(activeTab === 'approvals' || activeTab === 'audit') && !user && (
                 <div className="flex flex-col items-center justify-center py-24 bg-white dark:bg-slate-900/60 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm animate-fade-in">
                   <ShieldAlert className="w-12 h-12 text-amber-500 mb-4" />
