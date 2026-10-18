@@ -66,8 +66,8 @@ function MainApp() {
     <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-100 transition-colors duration-300">
       <Navbar currentView={currentView} setCurrentView={handleViewChange} />
 
-      {/* CORRECTED MAIN WRAPPER: Added max-w-7xl, mx-auto, and overflow-hidden */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-hidden">
+      {/* CHANGED max-w-7xl to max-w-5xl to constrain width on large screens */}
+      <main className="flex-1 w-full max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-hidden">
         {currentView === 'storefront' ? (
           <CustomerStorefront onNavigateToDashboard={() => handleViewChange('dashboard')} />
         ) : (

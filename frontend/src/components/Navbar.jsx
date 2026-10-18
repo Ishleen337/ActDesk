@@ -20,9 +20,9 @@ export default function Navbar({ currentView, setCurrentView }) {
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-white/80 dark:bg-slate-950/70 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/80 shadow-sm transition-colors duration-300">
-        <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-6">
+        {/* CHANGED max-w-7xl to max-w-5xl to match the main content width */}
+        <div className="w-full max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-6">
           
-          {/* LEFT: Logo & Brand - CORRECTED: Now visible on mobile */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
             <div className="relative">
               <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-emerald-300 opacity-60 blur-sm group-hover:opacity-100 transition-opacity duration-300" />
@@ -43,7 +43,6 @@ export default function Navbar({ currentView, setCurrentView }) {
             </div>
           </Link>
 
-          {/* CENTER: Navigation Links - CORRECTED: Visible and scrollable on mobile */}
           <div className="flex flex-1 justify-center items-center min-w-0 px-1 sm:px-0">
             {isStaticPage ? (
               <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600 dark:text-slate-400">
@@ -80,7 +79,6 @@ export default function Navbar({ currentView, setCurrentView }) {
             )}
           </div>
 
-          {/* RIGHT: Actions */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {!isStaticPage && (
               <button
