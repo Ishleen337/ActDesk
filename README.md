@@ -5,8 +5,6 @@
 
 **A production-grade B2B SaaS customer-support agent built for the Indian D2C ecosystem.**
 
-[![Tests](https://img.shields.io/badge/Tests-23%2F23%20Passed-brightgreen?style=for-the-badge)](backend/tests)
-[![Red-Team](https://img.shields.io/badge/Red--Team-100%25%20Defense-blue?style=for-the-badge)](backend/tests/test_redteam.py)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue?style=for-the-badge&logo=python)](backend)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi)](backend)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react)](frontend)
