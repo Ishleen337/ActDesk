@@ -75,15 +75,22 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url="/api/v1/openapi.json",
+    redirect_slashes=False, # CRITICAL FIX: Prevents Vercel routing conflicts
 )
 
 
 # ---------------------------------------------------------------------------
 # Middleware
 # ---------------------------------------------------------------------------
+# Add your specific Vercel domains to ensure CORS passes
+origins = settings.BACKEND_CORS_ORIGINS + [
+    "https://actdesk-qqv2xpsnt-ishleen-kaur-s-projects.vercel.app",
+    "https://actdesk-oif586sy-ishleen-kaur-s-projects.vercel.app"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*", "Idempotency-Key"],
