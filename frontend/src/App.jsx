@@ -16,7 +16,7 @@ import About from './pages/About';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Contact from './pages/Contact';
-import { useAuth } from './context/AuthContext'; // Added to protect routes
+import { useAuth } from './context/AuthContext'; 
 
 import { LayoutDashboard, Sliders, Clock, FileText, Package, ShieldAlert } from 'lucide-react';
 
@@ -32,7 +32,7 @@ const DASHBOARD_TABS = [
 function MainApp() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth(); // Get user state
+  const { user } = useAuth(); 
   const searchParams = new URLSearchParams(location.search);
   
   const viewParam = searchParams.get('view');
@@ -70,8 +70,9 @@ function MainApp() {
         {currentView === 'storefront' ? (
           <CustomerStorefront onNavigateToDashboard={() => handleViewChange('dashboard')} />
         ) : (
-          <div className="space-y-6">
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-800 no-scrollbar">
+          <div className="space-y-6 w-full max-w-full">
+            {/* Tabs container adjusted for safe scrolling on mobile */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-800 no-scrollbar w-full">
               {DASHBOARD_TABS.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -79,7 +80,7 @@ function MainApp() {
                   <button
                     key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-200 shrink-0 ${
                       isActive
                         ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
                         : 'text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-800'
@@ -95,12 +96,11 @@ function MainApp() {
               {activeTab === 'overview' && <OverviewTab onSwitchTab={handleTabChange} />}
               {activeTab === 'dial' && <AutonomyDialTab />}
               
-              {/* Protect Approvals & Audit so they don't spam 401 errors */}
               {(activeTab === 'approvals' || activeTab === 'audit') && !user && (
                 <div className="flex flex-col items-center justify-center py-24 bg-white dark:bg-slate-900/60 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm animate-fade-in">
                   <ShieldAlert className="w-12 h-12 text-amber-500 mb-4" />
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">Authentication Required</h3>
-                  <p className="text-slate-500 dark:text-slate-400 mt-2">Please log in as a Staff member to view this secure area.</p>
+                  <p className="text-slate-500 dark:text-slate-400 mt-2 text-center px-4">Please log in as a Staff member to view this secure area.</p>
                 </div>
               )}
 
