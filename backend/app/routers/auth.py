@@ -46,9 +46,7 @@ def require_role(allowed_roles: List[str]):
         return current_user
     return role_checker
 
-# CRITICAL FIX: Added both "/login" and "/login/" to handle Vercel's routing behavior
-@router.post("/login", response_model=Token, include_in_schema=False)
-@router.post("/login/", response_model=Token)
+@router.post("/login", response_model=Token)
 def login(req: LoginRequest, db: Session = Depends(get_db)):
     """Staff Login (Store Admin or Support Agent)."""
     user = db.query(User).filter(User.username == req.username).first()
@@ -69,9 +67,7 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
         full_name=user.full_name
     )
 
-# CRITICAL FIX: Added both "/refresh" and "/refresh/"
-@router.post("/refresh", response_model=Token, include_in_schema=False)
-@router.post("/refresh/", response_model=Token)
+@router.post("/refresh", response_model=Token)
 def refresh_token(req: RefreshRequest, db: Session = Depends(get_db)):
     """Refresh JWT access token using valid refresh token."""
     payload = decode_token(req.refresh_token)
@@ -96,9 +92,7 @@ def refresh_token(req: RefreshRequest, db: Session = Depends(get_db)):
         full_name=user.full_name
     )
 
-# CRITICAL FIX: Added both "/me" and "/me/"
-@router.get("/me", response_model=UserResponse, include_in_schema=False)
-@router.get("/me/", response_model=UserResponse)
+@router.get("/me", response_model=UserResponse)
 def get_my_profile(current_user: User = Depends(get_current_user)):
     """Get authenticated user profile."""
     return current_user
